@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<h1 class="text-center">book list</h1>
+<p>
+<a href="{% url 'upload_book' %}" class="btn btn-primary">upload book</a>
+</p>
+<table class="table text-center" >
+ <thead>
+  <tr>
+   <th> Cover
+   </th>
+   <th> Title
+   </th>
+   <th> Author
+   </th>
+    {% if user.is_authenticated %}
+   <th>Download
+   </th>
+   {% endif %}
+   <th> Delete
+   </th>
+  </tr>
+ </thead>
+ <tbody>
+  {% for books in book  %}
+  <tr>
+   <td>
+    {% if  books.cover %}
+    <a href="{{ books.cover.url}} ">
+     <img src="{{ books.cover.url }}" alt="{{ books.title }}" height="100px" width="100px">
+     </a>
+     {% else %}
+     <span class="text-muted">No cover</span>
+    {% endif %}
+   </td>
+   <td>
+    {{ books.title }}
+   </td>
+   
+   <td> 
+    {{ books.author }}
+   </td>
+   {% if user.is_authenticated %}
+   <td><a href="{{ books.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
+    Download PDF</a>
+   </td>
+   {% endif %}
+   <td>
+   <form method="POST" action="{% url 'delete_book' books.pk %}">
+   {% csrf_token %}
+   <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+   </form>
+   </td>
+  </tr>
+  {% endfor %}
+ </tbody>
+ <tfooter>
+  <tr>
+   <th> Cover
+   </th>
+   <th> Title
+   </th>
+   <th> Author
+   </th>
+    {% if user.is_authenticated %}
+   <th>Download
+   </th>
+    {% endif %}
+    <th> Delete
+   </th>
+  </tr>
+ </tfooter>
+</table>
+
+{% endblock content %}

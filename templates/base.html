@@ -1,0 +1,66 @@
+{% load staticfiles %}
+{% load static %}
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>code daddies list</title>
+  <meta name="viewport" content="width=device-width", initial-scale="1"/>
+  <link rel="stylesheet", href="{% static "css/style.css" %}">
+  <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+   <a href="/" class="navbar-brand"><b>simple is better than complex{% if user.is_authenticated %} {{ user.username }} {% else %} go and login {% endif %} </b></a>
+ 
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#"><span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+        
+      </li>
+{% if user.is_authenticated %}
+      <li class="nav-item">
+    
+        <a class="nav-link" href="{% url "secret_page" %}">secret page</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url "password_change" %}">change password</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url "logout" %}">logout</a>
+      </li>
+    {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url "signup" %}">signup</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url "login" %}">login</a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+ 
+{% block content %}
+
+{% endblock content %}
+
+</div>
+
+<script src="{% static "bootstrap/js/jquery-3.3.1.slim.min.js" %}"></script>
+<script src="{% static "bootstrap/js/popper.min.js" %}"></script>
+<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+</body>
+</html>
